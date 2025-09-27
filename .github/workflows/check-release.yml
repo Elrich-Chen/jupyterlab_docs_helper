@@ -25,7 +25,7 @@ jobs:
 
       - name: Install JupyterLab (includes jlpm)
         run: pip install jupyterlab
-        
+
       - name: Install JS deps
         run: jlpm install --frozen-lockfile
 
