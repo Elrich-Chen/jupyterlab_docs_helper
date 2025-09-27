@@ -1,0 +1,23 @@
+{
+  "id": "jupyterlab_docs_helper:plugin",
+  "title": "Docs Helper Settings",
+  "description": "Toolbar configuration for Docs Helper.",
+  "type": "object",
+  "properties": {},
+  "jupyter.lab.toolbars": {
+    "Notebook": [
+      {
+        "name": "ai-explain",
+        "command": "docs-helper:ai-explain",
+        "label": "AI: Explain",
+        "rank": 27
+      },
+      {
+        "name": "insert-note",
+        "command": "docs-helper:insert-note",
+        "label": "Insert Note",
+        "rank": 28
+      }
+    ]
+  }
+}

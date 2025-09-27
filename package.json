@@ -55,7 +55,9 @@
         "watch:labextension": "jupyter labextension watch ."
     },
     "dependencies": {
-        "@jupyterlab/application": "^4.0.0"
+        "@jupyterlab/application": "^4.4.9",
+        "@jupyterlab/apputils": "^4.5.9",
+        "@jupyterlab/notebook": "^4.4.9"
     },
     "devDependencies": {
         "@jupyterlab/builder": "^4.0.0",
@@ -78,7 +80,7 @@
         "stylelint-config-standard": "^34.0.0",
         "stylelint-csstree-validator": "^3.0.0",
         "stylelint-prettier": "^4.0.0",
-        "typescript": "~5.8.0",
+        "typescript": "~5.7.2",
         "yjs": "^13.5.0"
     },
     "sideEffects": [
@@ -91,7 +93,8 @@
     },
     "jupyterlab": {
         "extension": true,
-        "outputDir": "jupyterlab_docs_helper/labextension"
+        "outputDir": "jupyterlab_docs_helper/labextension",
+        "schemaDir": "schema"
     },
     "eslintIgnore": [
         "node_modules",
