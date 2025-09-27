@@ -1,0 +1,14 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v4.4.0
+_src_path: https://github.com/jupyterlab/extension-template
+author_email: elrichchen123@gmail.com
+author_name: Elrich Chen
+has_binder: false
+has_settings: false
+kind: frontend
+labextension_name: jupyterlab_docs_helper
+project_short_description: Extension for Suggestting Markdown for Jupyter code cells
+python_name: jupyterlab_docs_helper
+repository: https://github.com/Elrich-Chen/jupyterlab_docs_helper.git
+test: false
+
