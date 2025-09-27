@@ -11,4 +11,3 @@ project_short_description: Extension for Suggestting Markdown for Jupyter code c
 python_name: jupyterlab_docs_helper
 repository: https://github.com/Elrich-Chen/jupyterlab_docs_helper.git
 test: false
-
