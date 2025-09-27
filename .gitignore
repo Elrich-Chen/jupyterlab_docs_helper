@@ -119,3 +119,19 @@ dmypy.json
 
 # Yarn cache
 .yarn/
+
+# Ignore Jupyter scratch notebooks
+*.ipynb
+
+# Node modules, build outputs
+node_modules/
+doc/
+dist/
+lib/
+
+# Lockfiles (or choose to include one kind only)
+yarn.lock
+package-lock.json
+
+# Misc
+.DS_Store
