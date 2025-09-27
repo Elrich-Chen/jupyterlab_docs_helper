@@ -4169,6 +4169,7 @@ __metadata:
     stylelint-csstree-validator: ^3.0.0
     stylelint-prettier: ^4.0.0
     typescript: ~5.7.2
+    webpack: ^5.101.3
     yjs: ^13.5.0
   languageName: unknown
   linkType: soft
@@ -6162,7 +6163,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.76.1":
+"webpack@npm:^5.101.3, webpack@npm:^5.76.1":
   version: 5.101.3
   resolution: "webpack@npm:5.101.3"
   dependencies:
