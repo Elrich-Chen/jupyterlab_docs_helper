@@ -1,7 +1,5 @@
 # 📓 jupyterlab_docs_helper
 
-[![Build](https://github.com/Elrich-Chen/jupyterlab_docs_helper/actions/workflows/build.yml/badge.svg)](https://github.com/Elrich-Chen/jupyterlab_docs_helper/actions/workflows/build.yml)
-
 > Turn notebook code into **editable Markdown explanations** with one click.  
 > Local-first by default (via **Ollama**), but works with any Jupyter AI provider.
 
