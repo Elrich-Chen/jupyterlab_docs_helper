@@ -6,6 +6,7 @@ import {
 import { ICommandPalette } from '@jupyterlab/apputils';
 import { INotebookTracker } from '@jupyterlab/notebook';
 import { addIcon, paletteIcon } from '@jupyterlab/ui-components';
+import { CommandToolbarButton } from '@jupyterlab/apputils';
 
 /**
  * Initialization data for the jupyterlab_docs_helper extension.
@@ -22,6 +23,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
   ) => {
     console.log('pallete', palette);
     console.log('trackerrrrrrrr', tracker);
+    console.log('[docs-helper] extension activate() running');
 
     //add an application command
     const command: string = 'docs-helper:insert-note';
@@ -56,10 +58,10 @@ const plugin: JupyterFrontEndPlugin<void> = {
       }})
 palette.addItem({ command: command, category: 'Docs Helper' });
 
-  const AI_EXPLAIN: string = 'docs-helper:ai-explain';
-  app.commands.addCommand(AI_EXPLAIN, {
-    label: 'Docs Helper: AI Markdown (dev)',
-    caption: 'Log the active cell output JSON to the console',
+  const AI_MARKDOWN: string = 'docs-helper:ai-markdown';
+  app.commands.addCommand(AI_MARKDOWN, {
+    label: 'AI: Markdown',
+    caption: 'Insert placeholder, run worker, replace with Markdown',
     icon: paletteIcon,
     execute: async () => {
   const panel = tracker.currentWidget;
@@ -151,9 +153,37 @@ ${src}
     // const msg = '⚠️ Generation timed out. Re-run the AI button or check the worker cell below.';
     // if (typeof phsm.setSource === 'function') phsm.setSource(msg); else phsm.source = msg;
   }
+
+  
 }
   });
-  palette.addItem({ command: AI_EXPLAIN, category: 'Docs Helper' });
+  palette.addItem({ command: AI_MARKDOWN, category: 'Docs Helper' });
+
+  // helper to add our toolbar button to a given notebook panel (idempotent)
+  function ensureAIMarkdownButton(panel: any) {
+    if (!panel || !panel.toolbar) return;
+    const names = Array.from(panel.toolbar.names());
+    if (!names.includes('ai-markdown')) {
+      panel.toolbar.insertItem(
+        27,
+        'ai-markdown',
+        new CommandToolbarButton({ commands: app.commands, id: AI_MARKDOWN })
+      );
+      console.log('[docs-helper] inserted AI: Markdown button on panel', panel.id);
+    } else {
+      console.log('[docs-helper] AI: Markdown button already present on panel', panel.id);
+    }
+  }
+
+  // Add the button to future notebook panels
+  tracker.widgetAdded.connect((_, panel) => {
+    ensureAIMarkdownButton(panel);
+  });
+  // Also add it to any notebook that is already open at activation time
+  const current = tracker.currentWidget;
+  if (current) {
+    ensureAIMarkdownButton(current);
+  }
 
   }
 };

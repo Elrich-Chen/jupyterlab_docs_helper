@@ -134,4 +134,4 @@ yarn.lock
 package-lock.json
 
 # Misc
-.DS_Store
+.DS_Store*.tsbuildinfo

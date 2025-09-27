@@ -7,10 +7,10 @@
   "jupyter.lab.toolbars": {
     "Notebook": [
       {
-        "name": "ai-explain",
-        "command": "docs-helper:ai-explain",
-        "label": "AI: Explain",
-        "rank": 27
+        "name": "ai-markdown",
+        "command": "docs-helper:ai-markdown",
+        "label": "AI: Markdown",
+        "rank": 20
       },
       {
         "name": "insert-note",
