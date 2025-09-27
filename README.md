@@ -35,7 +35,7 @@ This extension is that tiny workflow upgrade.
 - **General notebook literature (usability & reproducibility studies)**  
   → Repeatedly shows that **documentation quality** is a major barrier to collaboration & reproducibility. Automated or semi-automated Markdown helpers directly address that pain.
 
-> [_Add formal citations in a **References** section at the bottom if you have DOIs or links._](https://www.researchgate.net/publication/350625539_HAConvGNN_Hierarchical_Attention_Based_Convolutional_Graph_Neural_Network_for_Code_Documentation_Generation_in_Jupyter_Notebooks)
+> [_Link to Research ](https://www.researchgate.net/publication/350625539_HAConvGNN_Hierarchical_Attention_Based_Convolutional_Graph_Neural_Network_for_Code_Documentation_Generation_in_Jupyter_Notebooks)
 
 ---
 
