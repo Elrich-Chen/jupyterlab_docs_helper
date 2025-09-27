@@ -41,17 +41,20 @@ This extension is that tiny workflow upgrade.
 
 ## 🧭 Business analyst “gap” framing
 
-**Baseline (already exists):**  
-- Jupyter AI extension (`%%ai`, chat panel).  
+**Baseline (already exists):**
+
+- Jupyter AI extension (`%%ai`, chat panel).
 - Export tools like nbconvert/Sphinx (great for full-doc outputs **after** the work, not for **cell-level** summaries in place).
 
-**Your differentiator:**  
-1. **Cell-level helpers** → short “What this does / Why it matters” blurbs per cell.  
-2. **Granularity control** → ability to merge/split documentation across cells.  
+**Your differentiator:**
+
+1. **Cell-level helpers** → short “What this does / Why it matters” blurbs per cell.
+2. **Granularity control** → ability to merge/split documentation across cells.
 3. **Trust & correctness** → suggestions are visible and editable; room for provenance/confidence signals.
 
-**Scope advice:**  
-- **MVP:** stub insertion + optional AI replace.  
+**Scope advice:**
+
+- **MVP:** stub insertion + optional AI replace.
 - **Later:** merging across cells, provenance/trust indicators, model picker, batch operations.
 
 ---
@@ -75,7 +78,7 @@ ollama serve
 ollama pull llama3.1
 ```
 
-  - Or OpenAI / Hugging Face / TogetherAI / Gemini — anything supported by Jupyter AI.
+- Or OpenAI / Hugging Face / TogetherAI / Gemini — anything supported by Jupyter AI.
 
 > ✅ **Sanity check (run in a notebook cell):**
 >
@@ -107,10 +110,10 @@ jupyter lab
 
 ## ▶️ How to use
 
-1. Place your cursor in a **code cell** you want explained.  
-2. Click **AI: Markdown** on the notebook toolbar.  
-3. A **Markdown placeholder** appears above: “⏳ Generating…”.  
-4. The AI worker runs under the hood using `%%ai`, then replaces the placeholder with **editable Markdown**.  
+1. Place your cursor in a **code cell** you want explained.
+2. Click **AI: Markdown** on the notebook toolbar.
+3. A **Markdown placeholder** appears above: “⏳ Generating…”.
+4. The AI worker runs under the hood using `%%ai`, then replaces the placeholder with **editable Markdown**.
 5. The temporary worker cell is removed; you continue editing the Markdown note directly.
 
 ---
@@ -123,9 +126,10 @@ Only if you want **local/private** inference with **no API keys**. Otherwise, sw
 **Where does the text go?**  
 Into a **normal Markdown cell** in your notebook (so you can edit immediately).
 
-**What if nothing shows up?**  
-- Confirm `%%ai` works in a fresh cell (see sanity check above).  
-- Ensure `ollama serve` is running and a model is pulled.  
+**What if nothing shows up?**
+
+- Confirm `%%ai` works in a fresh cell (see sanity check above).
+- Ensure `ollama serve` is running and a model is pulled.
 - Hard-reload your JupyterLab browser tab after installing the extension.
 
 **Can I document multiple cells at once?**  
@@ -143,8 +147,8 @@ This extension uses `%%ai` under the hood. Find the line that looks like:
 
 Swap it for any model ID Jupyter AI recognizes, e.g.:
 
-- `openai-chat:gpt-4o`  
-- `huggingface_hub:owner/model-id`  
+- `openai-chat:gpt-4o`
+- `huggingface_hub:owner/model-id`
 - `togetherai:DiscoResearch/DiscoLM-mixtral-8x7b-v2`
 
 Remember to export the correct API keys for your chosen provider (e.g., `OPENAI_API_KEY`, etc.).
@@ -154,11 +158,13 @@ Remember to export the correct API keys for your chosen provider (e.g., `OPENAI_
 ## 🛠️ Developer notes
 
 **Key files**
-- `src/index.ts` — registers the **AI: Markdown** command and inserts the toolbar button programmatically.  
-- `schema/plugin.json` — optional toolbar wiring via schema.  
+
+- `src/index.ts` — registers the **AI: Markdown** command and inserts the toolbar button programmatically.
+- `schema/plugin.json` — optional toolbar wiring via schema.
 - `package.json`, `tsconfig.json` — standard extension config.
 
 **Dev loop**
+
 ```bash
 jlpm watch     # rebuild on save
 jupyter lab    # run Lab in another terminal
@@ -167,21 +173,22 @@ jupyter lab    # run Lab in another terminal
 Refresh your browser tab to load changes after builds.
 
 **How it works (high-level)**
-- Reads the active code cell’s source.  
-- Inserts a **Markdown placeholder** above the cell.  
-- Creates a hidden **worker** cell with a `%%ai` prompt and runs it.  
-- Waits for text output → replaces the placeholder with Markdown.  
+
+- Reads the active code cell’s source.
+- Inserts a **Markdown placeholder** above the cell.
+- Creates a hidden **worker** cell with a `%%ai` prompt and runs it.
+- Waits for text output → replaces the placeholder with Markdown.
 - Deletes the worker cell → focuses the Markdown for editing.
 
 ---
 
 ## 🗺️ Roadmap
 
-- Model picker (toolbar dropdown)  
-- Timeout/error messages & retries in the placeholder  
-- **Granularity controls** (merge/split across cells)  
-- Provenance/trust signals (confidence, salient tokens, links to docs)  
-- Batch “Explain selected cells”  
+- Model picker (toolbar dropdown)
+- Timeout/error messages & retries in the placeholder
+- **Granularity controls** (merge/split across cells)
+- Provenance/trust signals (confidence, salient tokens, links to docs)
+- Batch “Explain selected cells”
 - Export summarized sections to a report
 
 ---
@@ -192,11 +199,11 @@ Refresh your browser tab to load changes after builds.
 
 ## 🙏 Credits
 
-- Built from the mindset of a **business analyst**: make code tell its story.  
-- **Jupyter AI** for the `%%ai` magic; **Ollama** for local models.  
+- Built from the mindset of a **business analyst**: make code tell its story.
+- **Jupyter AI** for the `%%ai` magic; **Ollama** for local models.
 - Research inspirations:
-  - **HAConvGNN** — Human-AI collaboration in notebooks; need for **many-cells → one markdown** and variable granularity.  
-  - **Themisto** — trust/UX signals for AI-generated docs (confidence, salient tokens, API links).  
+  - **HAConvGNN** — Human-AI collaboration in notebooks; need for **many-cells → one markdown** and variable granularity.
+  - **Themisto** — trust/UX signals for AI-generated docs (confidence, salient tokens, API links).
   - **Notebook usability & reproducibility literature** — documentation as a core friction point.
 
 ---
