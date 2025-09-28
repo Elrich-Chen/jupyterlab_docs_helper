@@ -95,9 +95,10 @@ ollama pull llama3.1
 git clone https://github.com/Elrich-Chen/jupyterlab_docs_helper.git
 cd jupyterlab_docs_helper
 
-# install deps & build (uses JupyterLab’s pinned yarn)
-jlpm install
-jlpm build
+# install deps & build (uses the Yarn version pinned in package.json)
+corepack enable
+yarn install
+yarn build
 
 # link into your JupyterLab environment
 jupyter labextension develop . --overwrite
@@ -105,6 +106,9 @@ jupyter labextension develop . --overwrite
 # run Lab
 jupyter lab
 ```
+
+> ℹ️ `corepack enable` only needs to be run once per environment; it ensures the
+> `yarn` command uses the pinned 4.x release from `package.json`.
 
 ---
 
@@ -166,7 +170,8 @@ Remember to export the correct API keys for your chosen provider (e.g., `OPENAI_
 **Dev loop**
 
 ```bash
-jlpm watch     # rebuild on save
+corepack enable
+yarn watch     # rebuild on save
 jupyter lab    # run Lab in another terminal
 ```
 
