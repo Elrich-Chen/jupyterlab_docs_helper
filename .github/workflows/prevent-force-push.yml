@@ -1,0 +1,18 @@
+name: Prevent Force Pushes
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  block-force-push:
+    if: github.event.forced == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail on force push
+        run: |
+          echo "::error::Force pushes are disabled for this repository."
+          echo "::error::The push to ${GITHUB_REF} by ${GITHUB_ACTOR} used --force."
+          echo "::error::Please revert the force push and push normally."
+          exit 1

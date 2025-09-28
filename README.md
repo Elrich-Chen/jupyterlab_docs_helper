@@ -35,7 +35,7 @@ This extension is that tiny workflow upgrade.
 - **General notebook literature (usability & reproducibility studies)**  
   → Repeatedly shows that **documentation quality** is a major barrier to collaboration & reproducibility. Automated or semi-automated Markdown helpers directly address that pain.
 
-> [HAConvGNN Paper](https://www.researchgate.net/publication/350625539_HAConvGNN_Hierarchical_Attention_Based_Convolutional_Graph_Neural_Network_for_Code_Documentation_Generation)
+- *Reference:* Li et al., “HAConvGNN: Hierarchical Attention-Based Convolutional Graph Neural Network for Code Documentation Generation,” IEEE Transactions on Software Engineering, 2021.
 
 ---
 
