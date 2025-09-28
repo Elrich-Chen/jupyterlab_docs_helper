@@ -33,13 +33,16 @@ const plugin: JupyterFrontEndPlugin<void> = {
       execute: async () => {
         const panel = tracker.currentWidget;
         const nb = panel?.content;
-        if (!panel || !nb || !nb.model) return;
+        if (!panel || !nb || !nb.model) {
+          return;
+        }
 
         app.shell.activateById(panel.id); // target THIS notebook
 
         // If nothing is selected yet, pick an anchor so “above” is defined
-        if (nb.activeCellIndex < 0 && nb.widgets.length > 0)
+        if (nb.activeCellIndex < 0 && nb.widgets.length > 0) {
           nb.activeCellIndex = 0;
+        }
 
         // 1) Structural ops via built-in commands (UI-safe)
         await app.commands.execute('notebook:insert-cell-above');
@@ -50,8 +53,11 @@ const plugin: JupyterFrontEndPlugin<void> = {
         if (cell) {
           const stub = '### What this cell does\n- \n\n### Why it matters\n- ';
           const sm: any = cell.model.sharedModel;
-          if (typeof sm.setSource === 'function') sm.setSource(stub);
-          else sm.source = stub;
+          if (typeof sm.setSource === 'function') {
+            sm.setSource(stub);
+          } else {
+            sm.source = stub;
+          }
         }
 
         // 3) Nice UX: cursor in the new cell
@@ -69,11 +75,12 @@ const plugin: JupyterFrontEndPlugin<void> = {
         const panel = tracker.currentWidget;
         const nb = panel?.content;
         const active = nb?.activeCell;
-        if (!panel || !nb || !active) return;
+        if (!panel || !nb || !active) {
+          return;
+        }
 
         // read source of the current (target) cell
-        // @ts-ignore
-        const sm: any = active.model.sharedModel;
+        const sm: any = (active.model as any).sharedModel;
         const src =
           typeof sm.getSource === 'function'
             ? sm.getSource()
@@ -100,13 +107,14 @@ ${src}
 
         const placeholderIndex = nb.activeCellIndex;
         const placeholderCell = nb.widgets[placeholderIndex];
-        // @ts-ignore
-        const phsm: any = placeholderCell.model.sharedModel;
+        const phsm: any = (placeholderCell.model as any).sharedModel;
         const placeholderText =
           '### ⏳ Generating explanation…\n\nThis will be replaced automatically when ready.';
-        if (typeof phsm.setSource === 'function')
+        if (typeof phsm.setSource === 'function') {
           phsm.setSource(placeholderText);
-        else phsm.source = placeholderText;
+        } else {
+          phsm.source = placeholderText;
+        }
         console.log(
           '[docs-helper] placeholder inserted at index',
           placeholderIndex
@@ -119,18 +127,19 @@ ${src}
 
         const workerIndex = placeholderIndex + 1;
         const workerCell = nb.widgets[workerIndex];
-        // @ts-ignore
-        const wsm: any = workerCell.model.sharedModel;
-        if (typeof wsm.setSource === 'function') wsm.setSource(prompt);
-        else wsm.source = prompt;
+        const wsm: any = (workerCell.model as any).sharedModel;
+        if (typeof wsm.setSource === 'function') {
+          wsm.setSource(prompt);
+        } else {
+          wsm.source = prompt;
+        }
 
         // 3) Run the worker cell
         nb.activeCellIndex = workerIndex;
         await app.commands.execute('notebook:run-cell');
 
         // 4) Wait for its output text
-        // @ts-ignore
-        const outputs = workerCell.model.outputs;
+        const outputs = (workerCell.model as any).outputs;
         let text = await waitForTextFromOutputs(outputs);
         text = stripFences(text);
 
@@ -138,10 +147,12 @@ ${src}
           // 5) Put the AI text into the placeholder cell (editable Markdown)
           // keep the placeholder selected
           nb.activeCellIndex = placeholderIndex;
-          // @ts-ignore
-          const phsm2: any = placeholderCell.model.sharedModel;
-          if (typeof phsm2.setSource === 'function') phsm2.setSource(text);
-          else phsm2.source = text;
+          const phsm2: any = (placeholderCell.model as any).sharedModel;
+          if (typeof phsm2.setSource === 'function') {
+            phsm2.setSource(text);
+          } else {
+            phsm2.source = text;
+          }
           console.log('[docs-helper] placeholder replaced with AI text');
 
           // 6) Delete the worker cell (we don’t need it anymore)
@@ -168,7 +179,9 @@ ${src}
 
     // helper to add our toolbar button to a given notebook panel (idempotent)
     function ensureAIMarkdownButton(panel: any) {
-      if (!panel || !panel.toolbar) return;
+      if (!panel || !panel.toolbar) {
+        return;
+      }
       const names = Array.from(panel.toolbar.names());
       if (!names.includes('ai-markdown')) {
         panel.toolbar.insertItem(
@@ -204,30 +217,44 @@ export default plugin;
 
 // 1) Extract text from the active code cell's outputs (works for stream & mime bundles)
 function extractTextFromOutputs(outputs: any): string {
-  if (!outputs || outputs.length === 0) return '';
+  if (!outputs || outputs.length === 0) {
+    return '';
+  }
   // search newest → oldest and return first non-empty text
   for (let i = outputs.length - 1; i >= 0; i--) {
     const out = outputs.get(i).toJSON() as any;
 
     // stream outputs: { output_type: "stream", text: "..." }
-    if (typeof out.text === 'string' && out.text.trim()) return out.text.trim();
+    if (typeof out.text === 'string' && out.text.trim()) {
+      return out.text.trim();
+    }
     if (Array.isArray(out.text)) {
       const s = out.text.join('').trim();
-      if (s) return s;
+      if (s) {
+        return s;
+      }
     }
 
     // execute/display results with mime bundle
     const md = out.data?.['text/markdown'];
-    if (typeof md === 'string' && md.trim()) return md.trim();
+    if (typeof md === 'string' && md.trim()) {
+      return md.trim();
+    }
     if (Array.isArray(md)) {
       const s = md.join('').trim();
-      if (s) return s;
+      if (s) {
+        return s;
+      }
     }
     const plain = out.data?.['text/plain'];
-    if (typeof plain === 'string' && plain.trim()) return plain.trim();
+    if (typeof plain === 'string' && plain.trim()) {
+      return plain.trim();
+    }
     if (Array.isArray(plain)) {
       const s = plain.join('').trim();
-      if (s) return s;
+      if (s) {
+        return s;
+      }
     }
   }
   return '';
@@ -255,7 +282,9 @@ function waitForTextFromOutputs(
 
     // fast path
     const first = tryExtract();
-    if (first) return resolve(first);
+    if (first) {
+      return resolve(first);
+    }
 
     // subscribe
     const onChanged = () => {
